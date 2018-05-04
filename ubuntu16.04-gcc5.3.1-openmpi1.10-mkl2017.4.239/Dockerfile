@@ -43,7 +43,7 @@ RUN mkdir -p $HOME/Deps && \
     curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
     rm -rf cmake-3.10.2-Linux-x86_64.tar.gz && \
     pip install --user virtualenv pipenv --upgrade pip && \
-    source /opt/intel/bin/mklvars.sh intel64
+    source /opt/intel/bin/compilervars.sh intel64
 ENV PATH $HOME/Deps/cmake/bin:$HOME/.local/bin:$PATH
 ENV LD_LIBRARY_PATH $HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 ENV MATH_ROOT=$MKLROOT
