@@ -1,4 +1,4 @@
-FROM dev-cafe/ubuntu16.04-pgi17.4:latest
+FROM devcafe/ubuntu16.04-pgi17.4:latest
 MAINTAINER Roberto Di Remigio  <roberto.d.remigio@uit.no>
 SHELL ["/bin/bash", "-c"]
 RUN mkdir -p $HOME/Downloads && \
