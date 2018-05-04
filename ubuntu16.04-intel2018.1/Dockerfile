@@ -35,6 +35,7 @@ RUN cd $WORKDIR/Deps && \
 USER mightybuilder
 ENV HOME /home/mightybuilder
 WORKDIR $HOME
+COPY bashrc $HOME/.bashrc
 RUN mkdir -p $HOME/Deps && \
     cd $HOME/Deps && \
     export cmake_url="https://cmake.org/files/v3.10/cmake-3.10.2-Linux-x86_64.tar.gz" && \
@@ -42,8 +43,6 @@ RUN mkdir -p $HOME/Deps && \
     mkdir -p $target_path && \
     curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
     rm -rf cmake-3.10.2-Linux-x86_64.tar.gz && \
-    pip install --user virtualenv pipenv --upgrade pip && \
-    source /opt/intel/bin/compilervars.sh -arch intel64 -platform linux
+    pip install --user virtualenv pipenv --upgrade pip
 ENV PATH $HOME/Deps/cmake/bin:$HOME/.local/bin:$PATH
 ENV LD_LIBRARY_PATH $HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
-ENV MATH_ROOT=$MKLROOT

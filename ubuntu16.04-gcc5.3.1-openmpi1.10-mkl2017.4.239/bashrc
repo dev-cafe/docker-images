@@ -1,0 +1,2 @@
+source /opt/intel/bin/compilervars.sh -arch intel64 -platform linux
+export MATH_ROOT=$MKLROOT
