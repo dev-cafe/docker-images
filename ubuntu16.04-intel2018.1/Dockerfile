@@ -18,15 +18,15 @@ RUN apt-get --yes -qq update && \
                               wget && \
     rm -rf /var/lib/apt/lists/*
 SHELL ["/bin/bash", "-c"]
-ENV MKL_URL "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12147/l_mkl_2017.4.239.tgz"
+ENV INTEL_URL "https://www.dropbox.com/s/75nmbp19l25fm6x/parallel_studio_xe_2018_update2_professional_edition.tgz"
 # Copy stuff from host to container
-COPY silent-mkl.cfg Deps/mkl/
+COPY silent-parallel-studio.cfg Deps/parallel_studio_xe_2018_update2_professional_edition/
 RUN cd $WORKDIR/Deps && \
-    curl -Ls $MKL_URL | tar -xz -C mkl --strip-components=1 && \
-    cd mkl && \
-    ./install.sh --silent=silent-mkl.cfg && \
+    curl -Ls $INTEL_URL | tar -xz -C parallel_studio_xe_2018_update2_professional_edition --strip-components=1 && \
+    cd parallel_studio_xe_2018_update2_professional_edition && \
+    ./install.sh --silent=silent-parallel-studio.cfg && \
     cd $WORKDIR/Deps && \
-    rm -rf l_mkl_2017.4.239.tgz mkl && \
+    rm -rf parallel_studio_xe_2018_update2_professional_edition.tgz parallel_studio_xe_2018_update2_professional_edition && \
     groupadd mightybuilder && \
     adduser --disabled-password --gecos '' --system --shell /bin/bash mightybuilder && \
     adduser mightybuilder sudo && \
@@ -43,7 +43,7 @@ RUN mkdir -p $HOME/Deps && \
     curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
     rm -rf cmake-3.10.2-Linux-x86_64.tar.gz && \
     pip install --user virtualenv pipenv --upgrade pip && \
-    source /opt/intel/bin/mklvars.sh intel64
+    source /opt/intel/bin/compilervars.sh -arch intel64 -platform linux
 ENV PATH $HOME/Deps/cmake/bin:$HOME/.local/bin:$PATH
 ENV LD_LIBRARY_PATH $HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 ENV MATH_ROOT=$MKLROOT
