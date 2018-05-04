@@ -26,7 +26,7 @@ RUN cd $WORKDIR/Deps && \
     cd parallel_studio_xe_2018_update2_professional_edition && \
     ./install.sh --silent=silent-parallel-studio.cfg && \
     cd $WORKDIR/Deps && \
-    rm -rf parallel_studio_xe_2018_update2_professional_edition.tgz parallel_studio_xe_2018_update2_professional_edition && \
+    rm -rf parallel_studio_xe_2018_update2_professional_edition && \
     groupadd mightybuilder && \
     adduser --disabled-password --gecos '' --system --shell /bin/bash mightybuilder && \
     adduser mightybuilder sudo && \
