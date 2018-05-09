@@ -4,7 +4,7 @@ SHELL ["/bin/bash", "-c"]
 RUN mkdir -p $HOME/Downloads && \
     cd $HOME/Deps && \
     mkdir -p ninja && \
-    export Ninja_URL="https://github.com/Kitware/ninja/releases/download/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1/ninja-1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1_x86_64-linux-gnu.tar.gz"
+    export Ninja_URL="https://github.com/Kitware/ninja/releases/download/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1/ninja-1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1_x86_64-linux-gnu.tar.gz" && \
     curl -Ls $Ninja_URL | tar -xz -C ninja --strip-components=1 && \
     echo "-- Done with Ninja" && \
     cd $HOME/Downloads && \
@@ -24,13 +24,6 @@ RUN mkdir -p $HOME/Downloads && \
     make install &> /dev/null && \
     rm -rf hdf5-1.10.2 hdf5-1.10.2.tar.bz2 && \
     cd $HOME/Downloads && \
-    echo "-- Done with HDF5 1.10.2" && \
-    curl -Ls https://repo.continuum.io/archive/Anaconda2-5.1.0-Linux-x86_64.sh > conda.sh && \
-    bash conda.sh -b -p $HOME/Deps/conda &> /dev/null && \
-    rm -rf conda.sh && \
-    PATH=$HOME/Deps/conda/bin${PATH:+:$PATH} && \
-    conda config --set always_yes yes --set changeps1 no &> /dev/null && \
-    conda update -q conda &> /dev/null && \
-    echo "-- Done with Anaconda 5.1.0"
-ENV PATH $HOME/Deps/ninja:$HOME/Deps/conda/bin:$PATH
+    echo "-- Done with HDF5 1.10.2"
+ENV PATH $HOME/Deps/ninja:$PATH
 ENV LD_LIBRARY_PATH $HOME/Deps/hdf5/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}

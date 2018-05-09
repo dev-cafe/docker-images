@@ -7,7 +7,7 @@ Docker images for fun and for profit, mostly meant to be used in GitLab CI or Dr
 * **`ubuntu16.04-pgi17.4`**: install PGI 17.4 CE on top of Ubuntu 16.04
   Currently used for testing [LSDALTON](https://gitlab.com/dalton/lsdalton)
 * **`ubuntu16.04-intel2018.1`**: install Intel 2018.1 on top of Ubuntu 16.04.
-* **`ubuntu16.04-pgi17.4-hdf5`**: install PGI 17.4 CE, HDF5 1.10.2 and Anaconda 5.1.0 on top of Ubuntu 16.04
+* **`ubuntu16.04-pgi17.4-hdf5`**: install PGI 17.4 CE and HDF5 1.10.2 on top of Ubuntu 16.04
   Currently used for testing [CMake Recipes](https://github.com/bast/cmake-recipes)
 * **`ubuntu16.04-pgi17.4-anaconda5.1.0`**: install PGI 17.4 CE and Anaconda 5.1.0 on top of Ubuntu 16.04
   Currently used for testing [CMake Recipes](https://github.com/bast/cmake-recipes)

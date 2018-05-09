@@ -4,7 +4,7 @@ SHELL ["/bin/bash", "-c"]
 RUN mkdir -p $HOME/Downloads && \
     cd $HOME/Deps && \
     mkdir -p ninja && \
-    export Ninja_URL="https://github.com/Kitware/ninja/releases/download/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1/ninja-1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1_x86_64-linux-gnu.tar.gz"
+    export Ninja_URL="https://github.com/Kitware/ninja/releases/download/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1/ninja-1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1_x86_64-linux-gnu.tar.gz" && \
     curl -Ls $Ninja_URL | tar -xz -C ninja --strip-components=1 && \
     echo "-- Done with Ninja" && \
     cd $HOME/Downloads && \
