@@ -38,11 +38,16 @@ WORKDIR $HOME
 COPY bashrc $HOME/.bashrc
 RUN mkdir -p $HOME/Deps && \
     cd $HOME/Deps && \
-    export cmake_url="https://cmake.org/files/v3.10/cmake-3.10.2-Linux-x86_64.tar.gz" && \
-    export target_path=$HOME/Deps/cmake && \
+    export cmake_url="https://cmake.org/files/v3.5/cmake-3.5.2-Linux-x86_64.tar.gz" && \
+    export target_path=$HOME/Deps/cmake/3.5.2 && \
+    rm -rf cmake-3.5.2-Linux-x86_64.tar.gz && \
     mkdir -p $target_path && \
     curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
-    rm -rf cmake-3.10.2-Linux-x86_64.tar.gz && \
+    export cmake_url="https://cmake.org/files/v3.11/cmake-3.11.1-Linux-x86_64.tar.gz" && \
+    export target_path=$HOME/Deps/cmake/3.11.1 && \
+    mkdir -p $target_path && \
+    curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
+    rm -rf cmake-3.11.1-Linux-x86_64.tar.gz && \
     pip install --user virtualenv pipenv --upgrade pip
 ENV PATH $HOME/Deps/cmake/bin:$HOME/.local/bin:$PATH
 ENV LD_LIBRARY_PATH $HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}

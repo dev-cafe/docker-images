@@ -50,11 +50,11 @@ RUN mkdir -p $HOME/Deps/pgilinux && \
     rm -rf cmake-3.5.2-Linux-x86_64.tar.gz && \
     mkdir -p $target_path && \
     curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
-    export cmake_url="https://cmake.org/files/v3.10/cmake-3.10.2-Linux-x86_64.tar.gz" && \
-    export target_path=$HOME/Deps/cmake/3.10.2 && \
+    export cmake_url="https://cmake.org/files/v3.11/cmake-3.11.1-Linux-x86_64.tar.gz" && \
+    export target_path=$HOME/Deps/cmake/3.11.1 && \
     mkdir -p $target_path && \
     curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
-    rm -rf cmake-3.10.2-Linux-x86_64.tar.gz && \
+    rm -rf cmake-3.11.1-Linux-x86_64.tar.gz && \
     pip install --user virtualenv pipenv --upgrade pip
 ENV PGI_VERSION 17.4
 ENV PGI_HOME    $HOME/Deps/pgi/linux86-64/$PGI_VERSION
