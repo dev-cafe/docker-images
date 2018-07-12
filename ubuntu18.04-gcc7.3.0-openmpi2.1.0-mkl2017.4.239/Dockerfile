@@ -13,6 +13,7 @@ RUN apt-get --yes -qq update && \
                               openmpi-bin \
                               python-dev \
                               python-pip \
+                              sudo \
                               wget && \
     rm -rf /var/lib/apt/lists/*
 SHELL ["/bin/bash", "-c"]
