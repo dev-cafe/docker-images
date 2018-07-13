@@ -1,9 +1,20 @@
 FROM ubuntu:18.04
+
 MAINTAINER Roberto Di Remigio  <roberto.d.remigio@uit.no>
+
+# Set an encoding to make things work smoothly.
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+# Add a timestamp for the build. Also, bust the cache.
+ADD https://now.httpbin.org/when/now /opt/docker/etc/timestamp
+
+# Install system packages
 RUN apt-get --yes -qq update && \
     apt-get --yes -qq upgrade && \
     apt-get --yes -qq install bzip2 \
                               cpio \
+                              cmake \
                               curl \
                               g++ \
                               gcc \
@@ -13,36 +24,27 @@ RUN apt-get --yes -qq update && \
                               openmpi-bin \
                               python3-dev \
                               python3-pip \
+                              gosu \
                               sudo \
                               wget && \
+    apt-get --yes -qq clean && \
     rm -rf /var/lib/apt/lists/*
-SHELL ["/bin/bash", "-c"]
-ENV MKL_URL "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12147/l_mkl_2017.4.239.tgz"
-# Copy stuff from host to container
+
+# Copy silent MKL configuration file
 COPY silent-mkl.cfg Deps/mkl/
-RUN cd $WORKDIR/Deps && \
-    curl -Ls $MKL_URL | tar -xz -C mkl --strip-components=1 && \
-    cd mkl && \
-    ./install.sh --silent=silent-mkl.cfg && \
-    cd $WORKDIR/Deps && \
-    rm -rf l_mkl_2017.4.239.tgz mkl && \
-    groupadd mightybuilder && \
-    adduser --disabled-password --gecos '' --system --shell /bin/bash mightybuilder && \
-    adduser mightybuilder sudo && \
-    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
-    adduser mightybuilder mightybuilder
-USER mightybuilder
-ENV HOME /home/mightybuilder
-WORKDIR $HOME
-COPY bashrc $HOME/.bashrc
-RUN mkdir -p $HOME/Deps && \
-    export cmake_url="https://cmake.org/files/v3.10/cmake-3.10.2-Linux-x86_64.tar.gz" && \
-    export target_path=$HOME/Deps/cmake && \
-    mkdir -p $target_path && \
-    curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
-    rm -rf cmake-3.10.2-Linux-x86_64.tar.gz && \
-    pip3 install --user virtualenv pipenv
-ENV LC_ALL "C.UTF-8"
-ENV LANG "C.UTF-8"
-ENV PATH $HOME/Deps/cmake/bin:$HOME/.local/bin:$PATH
-ENV LD_LIBRARY_PATH $HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+
+# Run common commands
+COPY run_commands /opt/docker/bin/run_commands
+RUN /opt/docker/bin/run_commands
+
+# Add a file for users to source
+COPY entrypoint_source /opt/docker/bin/entrypoint_source
+
+# Add a file that wraps that for use with the `ENTRYPOINT`.
+COPY entrypoint /opt/docker/bin/entrypoint
+
+# Ensure that all containers start with tini and the user selected process.
+ENTRYPOINT [ "/opt/docker/bin/tini", "--", "/opt/docker/bin/entrypoint" ]
+
+# Provide a default command (`bash`), which will start if the user doesn't specify one.
+CMD [ "/bin/bash" ]
