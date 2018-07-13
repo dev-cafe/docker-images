@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# give sudo permission for mightybuilder user
+# user creation is postponed to the entrypoint,
+# so we can create a user with the same id as the host
+echo 'mightybuilder ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# Install tini
+TINI_VERSION="v0.18.0"
+curl -Ls https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini -o /opt/docker/bin/tini
+chmod +x /opt/docker/bin/tini
+
+# Install MKL
+MKL_URL="http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12147/l_mkl_2017.4.239.tgz"
+cd Deps && \
+curl -Ls $MKL_URL | tar -xz -C mkl --strip-components=1 && \
+cd mkl && \
+./install.sh --silent=silent-mkl.cfg && \
+cd - && \
+rm -rf l_mkl_2017.4.239.tgz mkl
+
+# Install recent CMake
+cmake_url="https://cmake.org/files/v3.10/cmake-3.10.2-Linux-x86_64.tar.gz"
+target_path=/opt/docker/cmake
+mkdir -p $target_path && \
+curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
+rm -rf cmake-3.10.2-Linux-x86_64.tar.gz
+
+# Create lucky group
+groupadd -g 32766 lucky
