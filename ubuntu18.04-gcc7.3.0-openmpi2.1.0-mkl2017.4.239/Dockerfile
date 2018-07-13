@@ -11,8 +11,8 @@ RUN apt-get --yes -qq update && \
                               git \
                               libopenmpi-dev \
                               openmpi-bin \
-                              python-dev \
-                              python-pip \
+                              python3-dev \
+                              python3-pip \
                               sudo \
                               wget && \
     rm -rf /var/lib/apt/lists/*
@@ -41,6 +41,8 @@ RUN mkdir -p $HOME/Deps && \
     mkdir -p $target_path && \
     curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
     rm -rf cmake-3.10.2-Linux-x86_64.tar.gz && \
-    pip install --user virtualenv pipenv --upgrade pip
+    pip3 install --user virtualenv pipenv
+ENV LC_ALL "C.UTF-8"
+ENV LANG "C.UTF-8"
 ENV PATH $HOME/Deps/cmake/bin:$HOME/.local/bin:$PATH
 ENV LD_LIBRARY_PATH $HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}

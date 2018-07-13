@@ -4,7 +4,7 @@ Docker images for fun and for profit, mostly meant to be used in GitLab CI or Dr
 
 * **`ubuntu16.04-gcc5.3.1-openmpi1.10-mkl2017.4.239`**: install GCC 5.3.1, OpenMPI 1.10 and MKL 2017.4.239 on top of Ubuntu 16.04
   Currently used for testing [LSDALTON](https://gitlab.com/dalton/lsdalton)
-* **`ubuntu18.04-gcc7.3.0-openmpi2.1.0-mkl2017.4.239`**: install GCC 7.3.0, OpenMPI 2.1.0 and MKL 2017.4.239 on top of Ubuntu 18.04
+* **`ubuntu18.04-gcc7.3.0-openmpi2.1.0-mkl2017.4.239`**: install Python3, GCC 7.3.0, OpenMPI 2.1.0 and MKL 2017.4.239 on top of Ubuntu 18.04
 * **`ubuntu16.04-pgi17.4`**: install PGI 17.4 CE on top of Ubuntu 16.04
   Currently used for testing [LSDALTON](https://gitlab.com/dalton/lsdalton)
 * **`ubuntu16.04-intel2018.1`**: install Intel 2018.1 on top of Ubuntu 16.04.
