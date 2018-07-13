@@ -45,6 +45,3 @@ ENTRYPOINT [ "/opt/docker/bin/tini", "--", "/opt/docker/bin/entrypoint" ]
 
 # Provide a default command (`bash`), which will start if the user doesn't specify one.
 CMD [ "/bin/bash" ]
-
-ENV PATH $HOME/Deps/cmake/bin:$HOME/.local/bin:$PATH
-ENV LD_LIBRARY_PATH $HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}

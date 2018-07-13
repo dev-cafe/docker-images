@@ -1,7 +1,5 @@
 FROM ubuntu:18.04
 
-MAINTAINER Roberto Di Remigio  <roberto.d.remigio@uit.no>
-
 # Set an encoding to make things work smoothly.
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
@@ -10,25 +8,27 @@ ENV LC_ALL C.UTF-8
 ADD https://now.httpbin.org/when/now /opt/docker/etc/timestamp
 
 # Install system packages
-RUN apt-get --yes -qq update && \
-    apt-get --yes -qq upgrade && \
-    apt-get --yes -qq install bzip2 \
-                              cpio \
-                              cmake \
-                              curl \
-                              g++ \
-                              gcc \
-                              gfortran \
-                              git \
-                              libopenmpi-dev \
-                              openmpi-bin \
-                              python3-dev \
-                              python3-pip \
-                              gosu \
-                              sudo \
-                              wget && \
-    apt-get --yes -qq clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get --yes -qq update \
+ && apt-get --yes -qq upgrade \
+ && apt-get --yes -qq install
+                      bzip2 \
+                      cmake \
+                      cpio \
+                      curl \
+                      g++ \
+                      gcc \
+                      gfortran \
+                      git \
+                      gosu \
+                      libopenmpi-dev \
+                      openmpi-bin \
+                      python3-dev \
+                      python3-pip \
+                      virtualenv \
+                      wget \
+                      zlib1g-dev \
+ && apt-get --yes -qq clean \
+ && rm -rf /var/lib/apt/lists/*
 
 # Copy silent MKL configuration file
 COPY silent-mkl.cfg Deps/mkl/
