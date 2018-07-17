@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# give sudo permission for mightybuilder user
+# user creation is postponed to the entrypoint,
+# so we can create a user with the same id as the host
+echo 'mightybuilder ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# Install tini
+TINI_VERSION="v0.18.0"
+curl -Ls https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini -o /opt/docker/bin/tini
+chmod +x /opt/docker/bin/tini
+
+# Install recent CMake
+cmake_url="https://cmake.org/files/v3.12/cmake-3.12.0-Linux-x86_64.tar.gz"
+target_path="/opt/cmake"
+mkdir -p $target_path && \
+    curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
+    export PATH="/opt/cmake/bin:${PATH}" && \
+    rm -rf cmake-3.12.0-Linux-x86_64.tar.gz
+echo '-- Done with CMake!'
+
+# Install Ninja
+Ninja_URL="https://github.com/Kitware/ninja/releases/download/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1/ninja-1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1_x86_64-linux-gnu.tar.gz"
+target_path="/opt/ninja"
+mkdir -p $target_path && \
+    curl -Ls $Ninja_URL | tar -xz -C $target_path --strip-components=1 && \
+    rm -rf ninja-1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1_x86_64-linux-gnu.tar.gz && \
+    export PATH="/opt/ninja:${PATH}"
+echo '-- Done with Ninja!'
+
+# Install Eigen
+curl -LOs http://bitbucket.org/eigen/eigen/get/3.3.4.tar.gz && \
+    tar xzf 3.3.4.tar.gz &>/dev/null && \
+    cd eigen-eigen-5a0156e40feb && \
+    cmake -H. -Bbuild_eigen -DCMAKE_INSTALL_PREFIX=/opt/eigen &> /dev/null && \
+    cmake --build build_eigen -- install &> /dev/null && \
+    cd - && \
+    rm -rf eigen-eigen-5a0156e40feb 3.3.4.tar.gz
+echo '-- Done with Eigen!'
+
+# Install the latest Miniconda with Python 3 and update everything.
+curl -Ls https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > miniconda.sh && \
+    bash miniconda.sh -b -p /opt/conda && \
+    rm miniconda.sh && \
+    touch /opt/conda/conda-meta/pinned && \
+    export PATH="/opt/conda/bin:${PATH}" && \
+    conda config --set show_channel_urls True && \
+    conda config --set always_yes yes && \
+    conda config --set changeps1 no && \
+    conda update --all --yes && \
+    conda clean -tipy && \
+    # Install conda build and deployment tools.
+    conda install --yes --quiet conda-build anaconda-client jinja2 setuptools && \
+    conda clean -tipsy
+echo '-- Done with Conda!'
+
+# Install Intel compilers
+INTEL_URL="https://www.dropbox.com/s/75nmbp19l25fm6x/parallel_studio_xe_2018_update2_professional_edition.tgz"
+cd Deps && \
+    curl -Ls $INTEL_URL | tar -xz -C parallel_studio_xe_2018_update2_professional_edition --strip-components=1 && \
+    cd parallel_studio_xe_2018_update2_professional_edition && \
+    ./install.sh --silent=silent-parallel-studio.cfg && \
+    cd - && \
+    rm -rf parallel_studio_xe_2018_update2_professional_edition
+echo '-- Done with Intel!'
+
+# Create lucky group
+groupadd -g 32766 lucky
+chgrp -R lucky /opt/conda && chmod -R g=u /opt/conda
