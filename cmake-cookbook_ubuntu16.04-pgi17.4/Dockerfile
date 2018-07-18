@@ -34,9 +34,6 @@ RUN apt-get --yes -qq update \
                       uuid-dev \
  && rm -rf /var/lib/apt/lists/*
 
-# Copy silent configuration file
-COPY silent-parallel-studio.cfg Deps/parallel_studio_xe_2018_update2_professional_edition/
-
 # Run common commands
 COPY run_commands /opt/docker/bin/run_commands
 RUN /opt/docker/bin/run_commands

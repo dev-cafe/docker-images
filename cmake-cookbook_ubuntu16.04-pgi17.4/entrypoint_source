@@ -1,0 +1,10 @@
+export PGI_VERSION="17.4"
+export PGI_HOME="/opt/pgi/linux86-64/$PGI_VERSION"
+export PGI_BIN_DIR="$PGI_HOME/bin"
+export PGI_LIB_DIR="$PGI_HOME/lib"
+export PGI_MAN_DIR="$PGI_HOME/man"
+export LM_LICENSE_FILE=$LM_LICENSE_FILE:$PGI_HOME/license.dat
+
+export PATH=$PGI_HOME/bin:$PGI_HOME/mpi/openmpi/bin:/opt/cmake/bin:/opt/ninja:/opt/conda/bin:$HOME/.local/bin:$PATH
+export LD_LIBRARY_PATH=$PGI_LIB_DIR:$HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+export MANPATH $PGI_MAN_DIR:$MANPATH
