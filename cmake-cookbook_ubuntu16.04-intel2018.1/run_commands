@@ -40,18 +40,18 @@ echo '-- Done with Eigen!'
 
 # Install the latest Miniconda with Python 3 and update everything.
 curl -Ls https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > miniconda.sh && \
-    bash miniconda.sh -b -p /opt/conda && \
+    bash miniconda.sh -b -p /opt/conda &> /dev/null && \
     rm miniconda.sh && \
     touch /opt/conda/conda-meta/pinned && \
     export PATH="/opt/conda/bin:${PATH}" && \
-    conda config --set show_channel_urls True && \
-    conda config --set always_yes yes && \
-    conda config --set changeps1 no && \
-    conda update --all --yes && \
-    conda clean -tipy && \
+    conda config --set show_channel_urls True &> /dev/null && \
+    conda config --set always_yes yes &> /dev/null && \
+    conda config --set changeps1 no &> /dev/null && \
+    conda update --all --yes &> /dev/null && \
+    conda clean -tipy &> /dev/null && \
     # Install conda build and deployment tools.
-    conda install --yes --quiet conda-build anaconda-client jinja2 setuptools && \
-    conda clean -tipsy
+    conda install --yes --quiet conda-build anaconda-client jinja2 setuptools &> /dev/null && \
+    conda clean -tipsy &> /dev/null
 echo '-- Done with Conda!'
 
 # Install Intel compilers

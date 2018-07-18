@@ -1,5 +1,5 @@
 source /opt/intel/bin/compilervars.sh -arch intel64 -platform linux
 export MATH_ROOT=$MKLROOT
 
-export PATH=$HOME/.local/bin:$PATH
+export PATH=/opt/cmake/bin:/opt/ninja:/opt/conda/bin:$HOME/.local/bin:$PATH
 export LD_LIBRARY_PATH=$HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}

@@ -12,6 +12,7 @@ export MAIL=/var/spool/mail/mightybuilder
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/mightybuilder/bin
 chown -R mightybuilder:mightybuilder $HOME
 cp -R /etc/skel $HOME && chown -R mightybuilder:mightybuilder $HOME/skel && (ls -A1 $HOME/skel | xargs -I {} mv -n $HOME/skel/{} $HOME) && rm -Rf $HOME/skel
+cp /root/.condarc $HOME/.condarc && chown mightybuilder:mightybuilder $HOME/.condarc
 cd $HOME || exit
 
 # Source everything that needs to be.
