@@ -40,8 +40,10 @@ COPY entrypoint_source /opt/docker/bin/entrypoint_source
 # Add a file that wraps that for use with the `ENTRYPOINT`.
 COPY entrypoint /opt/docker/bin/entrypoint
 
+RUN [ ". /opt/docker/bin/entrypoint_source" ]
+
 # Ensure that all containers start with tini and the user selected process.
-ENTRYPOINT [ "/opt/docker/bin/tini", "--", "/opt/docker/bin/entrypoint" ]
+#ENTRYPOINT [ "/opt/docker/bin/tini", "--", "/opt/docker/bin/entrypoint" ]
 
 # Provide a default command (`bash`), which will start if the user doesn't specify one.
-CMD [ "/bin/bash" ]
+#CMD [ "/bin/bash" ]
