@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Install PGI compilers
-PGI_URL="https://www.dropbox.com/s/1z0oqyw4hk2ijik/pgilinux-2018-184-x86-64.tar.gz"
+PGI_URL="https://radovan.keybase.pub/docker/pgilinux-2018-184-x86-64.tar.gz"
 mkdir -p Deps/pgilinux && \
     cd Deps && \
     curl -Ls $PGI_URL | tar -xz -C pgilinux && \
