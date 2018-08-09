@@ -22,10 +22,8 @@ RUN apt-get --yes -qq update \
                       gfortran-mingw-w64 \
                       git \
                       libboost-all-dev \
-                      libopenmpi-dev \
                       libpython3-all-dev \
                       libzmq3-dev \
-                      openmpi-bin \
                       pkg-config \
                       python3-dev \
                       python3-pip \
@@ -33,12 +31,21 @@ RUN apt-get --yes -qq update \
                       uuid-dev \
  && rm -rf /var/lib/apt/lists/*
 
-# Copy silent configuration file
-COPY silent-parallel-studio.cfg Deps/parallel_studio_xe_2018_update2_professional_edition/
-
 # Run common commands
 COPY run_commands /opt/docker/bin/run_commands
 RUN /opt/docker/bin/run_commands
+
+ENV PGI_VERSION=18.4
+ENV PGI_HOME=/opt/pgi/linux86-64/$PGI_VERSION
+ENV PGI_BIN_DIR=$PGI_HOME/bin
+ENV PGI_LIB_DIR=$PGI_HOME/lib
+ENV PGI_MAN_DIR=$PGI_HOME/man
+ENV PGI_OMPI_DIR=$PGI_HOME/mpi/openmpi
+ENV LM_LICENSE_FILE=$LM_LICENSE_FILE:$PGI_HOME/license.dat
+
+ENV PATH=$PGI_BIN_DIR:$PGI_OMPI_DIR/bin:/opt/cmake/bin:/opt/ninja:/opt/conda/bin:$HOME/.local/bin:$PATH
+ENV LD_LIBRARY_PATH=$PGI_LIB_DIR:$HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+ENV MANPATH $PGI_MAN_DIR:$PGI_OMPI_DIR/man:$MANPATH
 
 ENV PATH /opt/cmake/bin:/opt/ninja:/opt/conda/bin:/root/.local/bin:$PATH
 

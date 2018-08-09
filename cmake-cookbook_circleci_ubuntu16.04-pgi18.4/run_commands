@@ -1,14 +1,25 @@
 #!/usr/bin/env bash
 
-# Install Intel compilers
-INTEL_URL="https://www.dropbox.com/s/75nmbp19l25fm6x/parallel_studio_xe_2018_update2_professional_edition.tgz"
-cd Deps && \
-    curl -Ls $INTEL_URL | tar -xz -C parallel_studio_xe_2018_update2_professional_edition --strip-components=1 && \
-    cd parallel_studio_xe_2018_update2_professional_edition && \
-    ./install.sh --silent=silent-parallel-studio.cfg && \
+# Install PGI compilers
+PGI_URL="https://www.dropbox.com/s/1z0oqyw4hk2ijik/pgilinux-2018-184-x86-64.tar.gz"
+mkdir -p Deps/pgilinux && \
+    cd Deps && \
+    curl -Ls $PGI_URL | tar -xz -C pgilinux && \
+    cd pgilinux && \
+    export PGI_SILENT=true && \
+    export PGI_ACCEPT_EULA=accept && \
+    export PGI_INSTALL_DIR=/opt/pgi && \
+    export PGI_INSTALL_TYPE=single && \
+    export PGI_INSTALL_NVIDIA=false && \
+    export PGI_INSTALL_MANAGED=true && \
+    export PGI_INSTALL_JAVA=false && \
+    export PGI_INSTALL_AMD=false && \
+    export PGI_INSTALL_MPI=true && \
+    export PGI_MPI_GPU_SUPPORT=false && \
+    ./install && \
     cd - && \
-    rm -rf parallel_studio_xe_2018_update2_professional_edition
-echo '-- Done with Intel!'
+    rm -rf pgilinux-2018-184-x86_64.tar.gz pgilinux
+echo '-- Done with PGI!'
 
 # Install recent CMake
 cmake_url="https://cmake.org/files/v3.12/cmake-3.12.0-Linux-x86_64.tar.gz"
