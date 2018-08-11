@@ -21,6 +21,7 @@ RUN apt-get --yes -qq update \
                       gfortran \
                       gfortran-mingw-w64 \
                       git \
+                      graphviz \
                       libboost-all-dev \
                       libopenmpi-dev \
                       libpython3-all-dev \
@@ -40,8 +41,8 @@ COPY silent-parallel-studio.cfg Deps/parallel_studio_xe_2018_update2_professiona
 COPY run_commands /opt/docker/bin/run_commands
 RUN /opt/docker/bin/run_commands
 
-ENV PATH /opt/cmake/bin:/opt/ninja:/opt/conda/bin:/root/.local/bin:$PATH
+ENV PATH $PATH:/root/.local/bin:/opt/cmake/bin:/opt/ninja:/opt/conda/bin
 
-ENV LD_LIBRARY_PATH /root/.local/lib:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH /root/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 
 SHELL ["/bin/bash"]

@@ -21,6 +21,7 @@ RUN apt-get --yes -qq update \
                       gfortran \
                       gfortran-mingw-w64 \
                       git \
+                      graphviz \
                       libboost-all-dev \
                       libpython3-all-dev \
                       libzmq3-dev \
@@ -43,8 +44,8 @@ ENV PGI_MAN_DIR $PGI_HOME/man
 ENV PGI_OMPI_DIR $PGI_HOME/mpi/openmpi
 ENV LM_LICENSE_FILE $LM_LICENSE_FILE:$PGI_HOME/license.dat
 
-ENV PATH $PGI_BIN_DIR:$PGI_OMPI_DIR/bin:/opt/cmake/bin:/opt/ninja:/opt/conda/bin:/root/.local/bin:$PATH
-ENV LD_LIBRARY_PATH $PGI_LIB_DIR:/root/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+ENV PATH $PATH:/root/.local/bin:/opt/cmake/bin:/opt/ninja:/opt/conda/bin:$PGI_BIN_DIR:$PGI_OMPI_DIR/bin
+ENV LD_LIBRARY_PATH /root/.local/lib:$PGI_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 ENV MANPATH $PGI_MAN_DIR:$PGI_OMPI_DIR/man:$MANPATH
 
 SHELL ["/bin/bash"]
