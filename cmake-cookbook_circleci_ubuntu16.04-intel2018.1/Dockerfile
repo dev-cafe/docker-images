@@ -41,7 +41,8 @@ COPY silent-parallel-studio.cfg Deps/parallel_studio_xe_2018_update2_professiona
 COPY run_commands /opt/docker/bin/run_commands
 RUN /opt/docker/bin/run_commands
 
-ENV PATH /root/.local/bin:/opt/cmake/bin:/opt/ninja:$PATH
+ENV PATH $PATH:/root/.local/bin:/opt/cmake/bin:/opt/ninja:/opt/conda/bin
+
 ENV LD_LIBRARY_PATH /root/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 
 SHELL ["/bin/bash"]
