@@ -44,7 +44,7 @@ ENV PGI_MAN_DIR $PGI_HOME/man
 ENV PGI_OMPI_DIR $PGI_HOME/mpi/openmpi
 ENV LM_LICENSE_FILE $LM_LICENSE_FILE:$PGI_HOME/license.dat
 
-ENV PATH $PATH:/root/.local/bin:/opt/cmake/bin:/opt/ninja:/opt/conda/bin:$PGI_BIN_DIR:$PGI_OMPI_DIR/bin
+ENV PATH $PGI_BIN_DIR:$PGI_OMPI_DIR/bin:$PATH:/root/.local/bin:/opt/cmake/bin:/opt/ninja:/opt/conda/bin
 ENV LD_LIBRARY_PATH /root/.local/lib:$PGI_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 ENV MANPATH $PGI_MAN_DIR:$PGI_OMPI_DIR/man:$MANPATH
 
