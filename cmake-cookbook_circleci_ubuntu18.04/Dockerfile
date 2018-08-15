@@ -25,6 +25,8 @@ RUN apt-get --yes -qq update \
                       libboost-all-dev \
                       libopenmpi-dev \
                       libpython3-all-dev \
+                      libx11-dev \
+                      libxt-dev \
                       libzmq3-dev \
                       openmpi-bin \
                       pkg-config \
