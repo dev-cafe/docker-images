@@ -22,7 +22,9 @@ RUN apt-get --yes -qq update \
                       gfortran-mingw-w64 \
                       git \
                       graphviz \
+                      libacl1-dev \
                       libboost-all-dev \
+                      libncurses5-dev \
                       libopenmpi-dev \
                       libpython3-all-dev \
                       libx11-dev \
