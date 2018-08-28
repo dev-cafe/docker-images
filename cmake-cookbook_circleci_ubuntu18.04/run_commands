@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 # Install recent CMake
-cmake_url="https://cmake.org/files/v3.12/cmake-3.12.0-Linux-x86_64.tar.gz"
+cmake_url="https://cmake.org/files/v3.12/cmake-3.12.1-Linux-x86_64.tar.gz"
 target_path="/opt/cmake"
 mkdir -p $target_path && \
     curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
     export PATH="/opt/cmake/bin:${PATH}" && \
-    rm -rf cmake-3.12.0-Linux-x86_64.tar.gz
+    rm -rf cmake-3.12.1-Linux-x86_64.tar.gz
 echo '-- Done with CMake!'
 
 # Install Ninja

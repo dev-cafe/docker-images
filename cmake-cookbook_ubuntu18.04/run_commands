@@ -10,27 +10,6 @@ TINI_VERSION="v0.18.0"
 curl -Ls https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini -o /opt/docker/bin/tini
 chmod +x /opt/docker/bin/tini
 
-# Install PGI compilers
-PGI_URL="https://www.dropbox.com/s/aktmjxbfet46xqs/pgilinux-2017-174-x86_64.tar.gz"
-mkdir -p Deps/pgilinux && \
-    cd Deps && \
-    curl -Ls $PGI_URL | tar -xz -C pgilinux && \
-    cd pgilinux && \
-    export PGI_SILENT=true && \
-    export PGI_ACCEPT_EULA=accept && \
-    export PGI_INSTALL_DIR=/opt/pgi && \
-    export PGI_INSTALL_TYPE=single && \
-    export PGI_INSTALL_NVIDIA=false && \
-    export PGI_INSTALL_MANAGED=true && \
-    export PGI_INSTALL_JAVA=false && \
-    export PGI_INSTALL_AMD=false && \
-    export PGI_INSTALL_MPI=true && \
-    export PGI_MPI_GPU_SUPPORT=false && \
-    ./install && \
-    cd - && \
-    rm -rf pgilinux-2017-174-x86_64.tar.gz pgilinux
-echo '-- Done with PGI!'
-
 # Install recent CMake
 cmake_url="https://cmake.org/files/v3.12/cmake-3.12.1-Linux-x86_64.tar.gz"
 target_path="/opt/cmake"
@@ -49,16 +28,6 @@ mkdir -p $target_path && \
     export PATH="/opt/ninja:${PATH}"
 echo '-- Done with Ninja!'
 
-# Install Eigen
-curl -LOs http://bitbucket.org/eigen/eigen/get/3.3.4.tar.gz && \
-    tar xzf 3.3.4.tar.gz &>/dev/null && \
-    cd eigen-eigen-5a0156e40feb && \
-    cmake -H. -Bbuild_eigen -DCMAKE_INSTALL_PREFIX=/opt/eigen &> /dev/null && \
-    cmake --build build_eigen -- install &> /dev/null && \
-    cd - && \
-    rm -rf eigen-eigen-5a0156e40feb 3.3.4.tar.gz
-echo '-- Done with Eigen!'
-
 # Install the latest Miniconda with Python 3 and update everything.
 curl -Ls https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > miniconda.sh && \
     bash miniconda.sh -b -p /opt/conda &> /dev/null && \
@@ -74,6 +43,10 @@ curl -Ls https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh >
     conda install --yes --quiet conda-build anaconda-client jinja2 setuptools &> /dev/null && \
     conda clean -tipsy &> /dev/null
 echo '-- Done with Conda!'
+
+# Install Pipenv
+pip install --upgrade pip pipenv
+echo '-- Done with Pipenv!'
 
 # Create lucky group
 groupadd -g 32766 lucky
