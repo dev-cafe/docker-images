@@ -20,11 +20,12 @@ cd - && \
 rm -rf l_mkl_2017.4.239.tgz mkl
 
 # Install recent CMake
-cmake_url="https://cmake.org/files/v3.10/cmake-3.10.2-Linux-x86_64.tar.gz"
+CMake_VERSION="3.13.5"
+cmake_url="https://cmake.org/files/v${CMake_VERSION%.*}/cmake-${CMake_VERSION}-Linux-x86_64.tar.gz"
 target_path=/opt/docker/cmake
 mkdir -p $target_path && \
 curl -Ls $cmake_url | tar -xz -C $target_path --strip-components=1 && \
-rm -rf cmake-3.10.2-Linux-x86_64.tar.gz
+rm -rf cmake-${CMake_VERSION}-Linux-x86_64.tar.gz
 
 # Create lucky group
 groupadd -g 32766 lucky
