@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-# give sudo permission for mightybuilder user
-# user creation is postponed to the entrypoint,
-# so we can create a user with the same id as the host
-echo 'mightybuilder ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+sed -i 's/mesg n || true/test -t 0 \&\& mesg n/g' /root/.profile
 
 # Install tini
 TINI_VERSION="v0.18.0"
