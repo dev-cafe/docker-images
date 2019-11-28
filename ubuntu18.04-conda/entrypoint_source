@@ -1,0 +1,6 @@
+export PATH=$HOME/.local/bin:/opt/conda/bin:$PATH
+
+conda init bash &> /dev/null
+source ~/.bashrc
+
+export LD_LIBRARY_PATH=$HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}

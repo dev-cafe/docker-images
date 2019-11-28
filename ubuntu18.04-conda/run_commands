@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+sed -i 's/mesg n || true/test -t 0 \&\& mesg n/g' /root/.profile
+
+# Install tini
+TINI_VERSION="v0.18.0"
+curl -Ls https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini -o /opt/docker/bin/tini
+chmod +x /opt/docker/bin/tini
+
+# Install the latest Miniconda with Python 3 and update everything.
+curl -Ls https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > miniconda.sh && \
+    bash miniconda.sh -b -p /opt/conda &> /dev/null && \
+    rm miniconda.sh && \
+    touch /opt/conda/conda-meta/pinned && \
+    export PATH="/opt/conda/bin:${PATH}" && \
+    conda config --set show_channel_urls True &> /dev/null && \
+    conda config --set always_yes yes &> /dev/null && \
+    conda config --set changeps1 no &> /dev/null && \
+    conda update --all --yes &> /dev/null && \
+    conda clean -tipy &> /dev/null
+echo '-- Done with Conda!'
+
+# Create lucky group
+groupadd -g 32766 lucky
+chgrp -R lucky /opt/conda && chmod -R g=u /opt/conda
