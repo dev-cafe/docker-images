@@ -18,8 +18,6 @@ RUN apt-get --yes -qq update \
     g++ \
     gcc \
     git \
-    libopenmpi-dev \
-    openmpi-bin \
     wget \
     zlib1g-dev \
  && apt-get --yes -qq clean \
