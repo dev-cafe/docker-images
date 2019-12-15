@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Install the latest Miniconda with Python 3 and update everything.
+curl -Ls https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > miniconda.sh && \
+    bash miniconda.sh -b -p /opt/conda &> /dev/null && \
+    rm miniconda.sh && \
+    touch /opt/conda/conda-meta/pinned && \
+    export PATH="/opt/conda/bin:${PATH}" && \
+    conda config --set show_channel_urls True &> /dev/null && \
+    conda config --set always_yes yes &> /dev/null && \
+    conda config --set changeps1 no &> /dev/null && \
+    conda update --all --yes &> /dev/null && \
+    conda clean -tipy &> /dev/null
+echo '-- Done with Conda!'
+
+# Create lucky group
+groupadd -g 32766 lucky
+chgrp -R lucky /opt/conda && chmod -R g=u /opt/conda
+
+# create user merzbow
+# merzbow will have the same uid as the host, so the container can write to
+# mounted volumes
+# Adapted from https://denibertovic.com/posts/handling-permissions-with-docker-volumes/
+USER_ID=${HOST_USER_ID:-9001}
+useradd --shell /bin/bash -u "$USER_ID" -G lucky -o -c "" -m merzbow
+export HOME=/home/merzbow
+export USER=merzbow
+export LOGNAME=merzbow
+export MAIL=/var/spool/mail/merzbow
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/merzbow/bin
+chown -R merzbow:merzbow $HOME
+cp -R /etc/skel $HOME && chown -R merzbow:merzbow $HOME/skel && (ls -A1 $HOME/skel | xargs -I {} mv -n $HOME/skel/{} $HOME) && rm -Rf $HOME/skel
+cd $HOME || exit
