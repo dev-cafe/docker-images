@@ -20,8 +20,6 @@ RUN apt-get --yes -qq update \
     gfortran \
     git \
     gosu \
-    libopenmpi-dev \
-    openmpi-bin \
     wget \
     zlib1g-dev \
  && apt-get --yes -qq clean \
