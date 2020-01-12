@@ -1,7 +1,7 @@
-export PATH=$HOME/Software/OpenMPI/bin:$HOME/.local/bin:/opt/conda/bin:$PATH
+export PATH=/opt/OpenMPI/bin:$HOME/.local/bin:/opt/conda/bin:$PATH
 
 # Let conda be known
 conda init bash &> /dev/null
 source ~/.bashrc
 
-export LD_LIBRARY_PATH=$HOME/Software/OpenMPI/lib:$HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=/opt/OpenMPI/lib:$HOME/.local/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}

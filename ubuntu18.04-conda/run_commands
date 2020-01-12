@@ -22,9 +22,9 @@ echo '-- Done with Conda!'
 
 curl -Ls https://download.open-mpi.org/release/open-mpi/v3.1/openmpi-3.1.5.tar.gz | tar -xz
 (
-    cd openmpi-3.1.5 || exit
-    ./configure --prefix="$HOME"/Software/OpenMPI
-    make all install
+    cd openmpi-3.1.5 || exit && \
+    ./configure --prefix=/opt/OpenMPI &> /dev/null && \
+    make all install &> /dev/null
 )
 echo '-- Done with OpenMPI!'
 
