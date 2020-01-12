@@ -20,10 +20,10 @@ curl -Ls https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh >
     conda clean -tipy &> /dev/null
 echo '-- Done with Conda!'
 
-curl -Ls https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-4.0.2.tar.gz | tar -xz
+curl -Ls https://download.open-mpi.org/release/open-mpi/v3.1/openmpi-3.1.5.tar.gz | tar -xz
 (
-    cd openmpi-4.0.2
-    ./configure --prefix=$HOME/Software/OpenMPI
+    cd openmpi-3.1.5 || exit
+    ./configure --prefix="$HOME"/Software/OpenMPI
     make all install
 )
 echo '-- Done with OpenMPI!'
