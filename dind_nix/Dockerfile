@@ -1,4 +1,4 @@
-FROM docker:dind
+FROM docker:latest
 
 # Enable HTTPS support in wget and set nsswitch.conf to make resolution work within containers
 #RUN apk add --no-cache --update openssl \
