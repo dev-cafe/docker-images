@@ -74,22 +74,21 @@ RUN wget https://nixos.org/releases/nix/nix-2.3/nix-2.3-x86_64-linux.tar.xz \
   && rm -rf /var/cache/apk/* \
   && /nix/var/nix/profiles/default/bin/nix-collect-garbage --delete-old \
   && /nix/var/nix/profiles/default/bin/nix-store --optimise \
-  && /nix/var/nix/profiles/default/bin/nix-store --verify --check-contents \
-  && chmod uga+r /nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt
+  && /nix/var/nix/profiles/default/bin/nix-store --verify --check-contents
 
 ONBUILD ENV \
     ENV=/etc/profile \
     USER=root \
     PATH=/nix/var/nix/profiles/default/bin:/nix/var/nix/profiles/default/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin \
-    GIT_SSL_CAINFO=/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt \
-    NIX_SSL_CERT_FILE=/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt
+    GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt \
+    NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
 ENV \
     ENV=/etc/profile \
     USER=root \
     PATH=/nix/var/nix/profiles/default/bin:/nix/var/nix/profiles/default/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin \
-    GIT_SSL_CAINFO=/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt \
-    NIX_SSL_CERT_FILE=/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt \
+    GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt \
+    NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
     NIX_PATH=/nix/var/nix/profiles/per-user/root/channels
 
 ENTRYPOINT ["docker-entrypoint.sh"]
