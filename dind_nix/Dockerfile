@@ -64,7 +64,6 @@ RUN mkdir /certs /certs/client && chmod 1777 /certs /certs/client
 # Download Nix and install it into the system.
 RUN wget https://nixos.org/releases/nix/nix-2.3/nix-2.3-x86_64-linux.tar.xz \
   && tar xf nix-2.3-x86_64-linux.tar.xz \
-  && addgroup -g 20000 -S docker \
   && addgroup -g 30000 -S nixbld \
   && for i in $(seq 1 30); do adduser -S -D -h /var/empty -g "Nix build user $i" -u $((30000 + i)) -G nixbld nixbld$i ; done \
   && mkdir -m 0755 /etc/nix \
@@ -75,7 +74,8 @@ RUN wget https://nixos.org/releases/nix/nix-2.3/nix-2.3-x86_64-linux.tar.xz \
   && rm -rf /var/cache/apk/* \
   && /nix/var/nix/profiles/default/bin/nix-collect-garbage --delete-old \
   && /nix/var/nix/profiles/default/bin/nix-store --optimise \
-  && /nix/var/nix/profiles/default/bin/nix-store --verify --check-contents
+  && /nix/var/nix/profiles/default/bin/nix-store --verify --check-contents \
+  && chmod uga+r /nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt
 
 ONBUILD ENV \
     ENV=/etc/profile \
